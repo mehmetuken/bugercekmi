@@ -1,0 +1,12 @@
+{
+  "name": "Bu gerçek mi?",
+  "addons": ["mongolab:sandbox", "heroku-redis:hobby-dev"],
+  "buildpacks": [
+    {
+      "url": "heroku/nodejs"
+    },
+    {
+      "url": "https://github.com/jontewks/puppeteer-heroku-buildpack"
+    }
+  ]
+}
