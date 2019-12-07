@@ -14,9 +14,7 @@
     "ioredis": "^4.14.1",
     "puppeteer": "^2.0.0",
     "signale": "^1.4.0",
-    "twit": "^2.2.11"
-  },
-  "devDependencies": {
+    "twit": "^2.2.11",
     "tslib": "^1.10.0"
   }
 }
