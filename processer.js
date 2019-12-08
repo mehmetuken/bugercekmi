@@ -42,10 +42,12 @@ class Processer {
     this.logger.info(`Tweet adding queue. Tweet Id: ${tweet.id_str}`);
     if (!tweet.in_reply_to_status_id_str) {
       this.logger.info(`Tweet not reply. Tweet Id: ${tweet.id_str}`);
+      /*
       await this.queue.add("help", {
         username: tweet.user.screen_name,
         tweetId: tweet.id_str
       });
+      */
     } else {
       await this.queue.add("reply", {
         username: tweet.user.screen_name,
