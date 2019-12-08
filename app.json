@@ -1,5 +1,27 @@
 {
   "name": "Bu gerçek mi?",
+  "description": "Twitter üzerinde etiketlendiği tweetlerdeki resimleri Google Görsellerde aratıp sonucu cevap olarak ileten bot.",
+  "keywords": ["twitter", "bot", "fake news", "find fact"],
+  "repository": "https://github.com/mehmetuken/bugercekmi",
+  "website": "https://github.com/mehmetuken/bugercekmi",
+  "env": {
+    "TWITTER_CONSUMER_KEY": {
+      "description": "Twitter Consumer Key"
+    },
+    "TWITTER_CONSUMER_SECRET": {
+      "description": "Twitter Consumer Secret"
+    },
+    "TWITTER_ACCESS_TOKEN": {
+      "description": "Twitter Access Token"
+    },
+    "TWITTER_ACCESS_TOKEN_SECRET": {
+      "description": "Twitter Access Token Secret"
+    },
+    "TWITTER_STREAM_TEXT": {
+      "description": "Twitter üzerinde takip edilecek kelime.",
+      "value": "@bugercekmi_"
+    }
+  },
   "addons": ["heroku-redis:hobby-dev"],
   "buildpacks": [
     {
