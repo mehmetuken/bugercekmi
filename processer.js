@@ -96,7 +96,7 @@ class Processer {
   }
 
   async processHelp(job) {
-    const status = `@${job.data.username} Resim bulunan bir tweete beni etiketlersen yardımcı olabilirim.`,;
+    const status = `@${job.data.username} Resim bulunan bir tweete beni etiketlersen yardımcı olabilirim.`;
     const replyTweet = await this.twitterClient.sendReply(
       status,
       job.data.tweetId
