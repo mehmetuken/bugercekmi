@@ -39,21 +39,33 @@ class Processer {
       `New Tweet From ${tweet.user.screen_name} Tweet Id: ${tweet.id_str}`
     );
 
+    this.logger.info(`Tweet adding queue. Tweet Id: ${tweet.id_str}`);
     if (!tweet.in_reply_to_status_id_str) {
       this.logger.info(`Tweet not reply. Tweet Id: ${tweet.id_str}`);
-      return;
+      await this.queue.add("help", {
+        username: tweet.user.screen_name,
+        tweetId: tweet.id_str
+      });
+    } else {
+      await this.queue.add("reply", {
+        username: tweet.user.screen_name,
+        tweetId: tweet.id_str,
+        replyId: tweet.in_reply_to_status_id_str
+      });
     }
-
-    this.logger.info(`Tweet adding queue. Tweet Id: ${tweet.id_str}`);
-    await this.queue.add("tweet", {
-      username: tweet.user.screen_name,
-      tweetId: tweet.id_str,
-      replyId: tweet.in_reply_to_status_id_str
-    });
   }
 
   async process(job) {
     this.logger.info(`Start processing tweet. Tweet Id: ${job.data.replyId}`);
+
+    if (job.name == "reply") {
+      await this.processReply(job);
+    } else if (job.name == "help") {
+      await this.processHelp(job);
+    }
+  }
+
+  async processReply(job) {
     const tweetImageUrl = await this.twitterClient.getTweetMediaUrl(
       job.data.replyId
     );
@@ -77,10 +89,18 @@ class Processer {
       );
     } else {
       const replyTweet = await this.twitterClient.sendReply(
-        `Şimdilik sadece resimleri kontrol ediyorum. @${job.data.username}`,
+        `@${job.data.username} Şimdilik sadece resimleri kontrol ediyorum.`,
         job.data.tweetId
       );
     }
+  }
+
+  async processHelp(job) {
+    const status = `@${job.data.username} Resim bulunan bir tweete beni etiketlersen yardımcı olabilirim.`,;
+    const replyTweet = await this.twitterClient.sendReply(
+      status,
+      job.data.tweetId
+    );
   }
 
   async dispose() {
