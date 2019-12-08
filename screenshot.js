@@ -77,6 +77,7 @@ class Screenshot {
   async takeShot(imageUrl) {
     let page = null;
     try {
+      this.logger.debug("Create puppeter page.");
       page = await this.browser.newPage();
 
       await page.goto("https://google.com/imghp", {
