@@ -11,19 +11,25 @@ class Processer {
     this.logger = new Signale({ scope: "Processer" });
 
     const redisConnection = new Redis(config.REDIS_URL);
+    this.logger.debug("Connect redis.");
 
     this.queue = new Queue("Tweet", { connection: redisConnection });
+    this.logger.debug("Create tweet queue.");
 
     this.worker = new Worker("Tweet", job => this.process(job), {
       connection: redisConnection
     });
+    this.logger.debug("Create tweet worker.");
 
     this.worker.on("failed", (job, err) => {
       this.logger.error("Failed Job", job.data.tweetId, err);
     });
 
     this.twitterClient = new Twitter();
+    this.logger.debug("Create twitter client.");
+
     this.screenshotManager = new Screenshot();
+    this.logger.debug("Create chrome screenshot manager.");
 
     this.twitterClient
       .createStream(config.TWITTER.STREAM_TEXT)

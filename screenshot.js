@@ -1,7 +1,10 @@
 const puppeteer = require("puppeteer");
+const { Signale } = require("signale");
 
 class Screenshot {
-  constructor() {}
+  constructor() {
+    this.logger = new Signale({ scope: "Screenshot Manager" });
+  }
 
   getArgs() {
     let args = [
@@ -68,6 +71,7 @@ class Screenshot {
       headless: headless,
       defaultViewport: this.getViewport()
     });
+    this.logger.debug("Create puppeter browser.");
   }
 
   async takeShot(imageUrl) {
