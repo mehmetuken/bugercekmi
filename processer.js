@@ -90,10 +90,11 @@ class Processer {
         mediaId
       );
     } else {
+      /*
       const replyTweet = await this.twitterClient.sendReply(
         `@${job.data.username} Şimdilik sadece resimleri kontrol ediyorum.`,
         job.data.tweetId
-      );
+      );*/
     }
   }
 
