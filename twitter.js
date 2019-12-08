@@ -6,14 +6,18 @@ const LOG_KEY = "TwitterClient";
 
 class TwitterClient {
   constructor() {
-    this.client = new Twit({
-      consumer_key: config.TWITTER.CONSUMER_KEY,
-      consumer_secret: config.TWITTER.CONSUMER_SECRET,
-      access_token: config.TWITTER.ACCESS_TOKEN,
-      access_token_secret: config.TWITTER.ACCESS_TOKEN_SECRET
-    });
-
     this.logger = new Signale({ scope: LOG_KEY });
+    try {
+      this.client = new Twit({
+        consumer_key: config.TWITTER.CONSUMER_KEY,
+        consumer_secret: config.TWITTER.CONSUMER_SECRET,
+        access_token: config.TWITTER.ACCESS_TOKEN,
+        access_token_secret: config.TWITTER.ACCESS_TOKEN_SECRET
+      });
+    } catch (error) {
+      this.logger.error(error);
+      process.exit(0);
+    }
   }
 
   createStream(filterText) {
